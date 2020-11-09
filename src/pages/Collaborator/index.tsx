@@ -25,9 +25,7 @@ const Collaborator: React.FC = () => {
   );
 
   const handleDeleteCollaborator = useCallback((id: number) => {
-    api.delete(`collaborator/${id}`).then(()=> {
-
-    })
+    console.log('object');
   }, []);
 
   return (
@@ -48,7 +46,7 @@ const Collaborator: React.FC = () => {
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
         handleEditCollaborator={handleEditCollaborator}
-        handleDeleteCollaborator={}
+        handleDeleteCollaborator={handleDeleteCollaborator}
       />
     </>
   );

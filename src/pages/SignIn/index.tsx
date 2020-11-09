@@ -6,6 +6,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import GoogleLogin from 'react-google-login';
+import ReactFacebookLogin from 'react-facebook-login';
 
 import { Container, Content } from './styles';
 import Input from '../../components/Input';
@@ -22,7 +24,7 @@ interface ISignInForData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
+  const { signIn, signInGoogle, signInFacebook } = useAuth();
   const { addToast } = useToast();
   const history = useHistory();
 
@@ -77,12 +79,31 @@ const SignIn: React.FC = () => {
           <Button type="submit">Entrar</Button>
         </Form>
         <h3>Ou</h3>
-        <Button icon={FcGoogle} variant="secondary">
-          Acessar com Google
-        </Button>
-        <Button icon={FaFacebook} iconColor="#44619f" variant="secondary">
-          Acessar com Facebook
-        </Button>
+        <GoogleLogin
+          clientId={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
+          buttonText="Acessar com Google"
+          render={(resnderProps) => (
+            <Button
+              icon={FcGoogle}
+              onClick={resnderProps.onClick}
+              variant="secondary"
+            >
+              Acessar com Google
+            </Button>
+          )}
+          onSuccess={signInGoogle}
+          onFailure={(err) => console.log(err)}
+          cookiePolicy="single_host_origin"
+        />
+        <ReactFacebookLogin
+          appId={`${process.env.REACT_APP_FACEBOOK_API_KEY}`}
+          autoLoad
+          textButton="Acessar com Facebook"
+          fields="name,email,picture"
+          callback={signInFacebook}
+          cssClass="my-facebook-button-class"
+          icon="fa-facebook"
+        />
       </Content>
     </Container>
   );

@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   ...rest
 }) => (
-  <Container variant={variant} type="button" {...rest}>
+  <Container variant={variant} hasIcon={!!Icon} type="button" {...rest}>
     {Icon && <Icon size={iconSize || 22} color={iconColor} />}
     <span>{children}</span>
   </Container>
